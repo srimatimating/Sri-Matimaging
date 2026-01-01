@@ -6,14 +6,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
 <style>
-/* NAVBAR FIX - ONLY THIS IS ADDED */
+/* FORCE CLEAR CACHE AND FIX NAVBAR SCROLLING */
 html {
-    scroll-padding-top: 100px; /* This fixes ALL anchor links */
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px !important;
 }
 
-.section {
-    padding-top: 20px; /* Extra space for section titles */
-    margin-top: -20px; /* Compensate for the padding */
+body {
+    padding-top: 0 !important;
+}
+
+.section[id],
+#home, 
+#services, 
+#projects, 
+#contact {
+    scroll-margin-top: 100px !important;
+    padding-top: 30px !important;
+    margin-top: -30px !important;
+}
+
+/* Ensure navbar is fixed and doesn't overlap */
+.navbar {
+    position: fixed !important;
+    top: 0 !important;
+    width: 100% !important;
+    z-index: 1000 !important;
+    background: white !important;
+}
+
+/* Add padding to body to account for fixed navbar */
+body {
+    padding-top: 80px !important;
 }
 </style>
 </head>
@@ -21,7 +45,7 @@ html {
 <body>
 
 <!-- NAVBAR -->
-<div class="navbar">
+<div class="navbar" style="position: fixed; top: 0; width: 100%; z-index: 1000; background: white;">
   <img src="logo.png">
   <h1>Sri Matimaging Technologies</h1>
   
@@ -29,12 +53,13 @@ html {
     <a href="#home">Home</a>
     <a href="#services">Services</a>
     <a href="#projects">Projects</a>
+    <a href="#about">About Us</a>
     <a href="#contact">Contact</a>
   </div>
 </div>
 
 <!-- HERO -->
-<section id="home" class="hero">
+<section id="home" class="hero" style="scroll-margin-top: 100px; padding-top: 30px; margin-top: -30px;">
   <div class="hero-content">
     <h2>Empowering Technology Through Innovation</h2>
     <p>Industry-leading imaging solutions, technical consulting, and IT services</p>
@@ -42,7 +67,7 @@ html {
 </section>
 
 <!-- SERVICES -->
-<section id="services" class="section">
+<section id="services" class="section" style="scroll-margin-top: 100px; padding-top: 30px; margin-top: -30px;">
 <h3>Our Services & Training Programs</h3>
 
 <div class="services-grid">
@@ -145,7 +170,7 @@ html {
 </section>
 
 <!-- PROJECTS SECTION -->
-<section id="projects" class="section">
+<section id="projects" class="section" style="scroll-margin-top: 100px; padding-top: 30px; margin-top: -30px;">
   <h3>Our Projects</h3>
   <div class="article" style="text-align: center; padding: 50px;">
     <p style="font-size: 18px; color: #666; font-style: italic;">
@@ -155,7 +180,7 @@ html {
 </section>
 
 <!-- ABOUT US -->
-<section class="section">
+<section id="about" class="section" style="scroll-margin-top: 100px; padding-top: 30px; margin-top: -30px;">
 <h3>About Us</h3>
 <div class="article">
 <p><strong>Sri Matimaging Technologies</strong> is a premier technology solutions provider specializing in imaging technologies, software development, and IT consulting services.</p>
@@ -175,7 +200,7 @@ html {
 </section>
 
 <!-- CONTACT SECTION -->
-<section id="contact" class="section">
+<section id="contact" class="section" style="scroll-margin-top: 100px; padding-top: 30px; margin-top: -30px;">
 <h3>Contact Us</h3>
 <div class="contact-card">
   
@@ -284,6 +309,16 @@ html {
 </footer>
 
 <script>
+// Force clear cache for GitHub Pages
+if (window.location.hostname.includes('github.io') || window.location.hostname.includes('github.com')) {
+    // Add cache busting for GitHub Pages
+    document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+        if (link.href.includes('style.css')) {
+            link.href = link.href.split('?')[0] + '?v=' + new Date().getTime();
+        }
+    });
+}
+
 // Service functionality
 function openService(i){
   document.querySelectorAll('.service-detail')
@@ -336,31 +371,51 @@ document.getElementById('phone').addEventListener('input', function(e) {
   e.target.value = value;
 });
 
-// FIX FOR NAVIGATION - ADDED THIS ONLY
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    e.preventDefault();
+// ULTIMATE FIX FOR GITHUB PAGES NAVIGATION
+document.addEventListener('DOMContentLoaded', function() {
+    // Fix all anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#') return;
+            
+            e.preventDefault();
+            
+            const targetElement = document.querySelector(href);
+            if (targetElement) {
+                // Calculate position
+                const navbarHeight = document.querySelector('.navbar').offsetHeight || 80;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - navbarHeight - 20;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+                
+                // Update URL without scrolling
+                history.pushState(null, null, href);
+            }
+        });
+    });
     
-    const targetId = this.getAttribute('href');
-    if (targetId === '#') return;
-    
-    const targetElement = document.querySelector(targetId);
-    if (targetElement) {
-      // Get the navbar height
-      const navbar = document.querySelector('.navbar');
-      const navbarHeight = navbar ? navbar.offsetHeight : 80;
-      
-      // Calculate position to show the section title
-      const titleElement = targetElement.querySelector('h3') || targetElement;
-      const elementPosition = titleElement.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - navbarHeight - 20;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+    // Also handle direct URL anchors on page load
+    if (window.location.hash) {
+        setTimeout(function() {
+            const hash = window.location.hash;
+            const targetElement = document.querySelector(hash);
+            if (targetElement) {
+                const navbarHeight = document.querySelector('.navbar').offsetHeight || 80;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - navbarHeight - 20;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }, 100);
     }
-  });
 });
 </script>
 
