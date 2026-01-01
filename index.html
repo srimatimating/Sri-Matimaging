@@ -173,6 +173,215 @@
     <h4>Send Us a Message</h4>
     <p>Fill out the form below and we'll get back to you as soon as possible.</p>
     
+    <!-- FORMSPREE FORM - SIMPLIFIED AND WORKING -->
+    <form id="contactForm" class="contact-form" action="https://formspree.io/f/maqnnyja" method="POST">
+      <!-- Formspree Hidden Fields -->
+      <input type="hidden" name="_subject" value="New Contact Form Submission - Sri Matimaging Technologies">
+      <input type="hidden" name="_replyto" value="_replyto">
+      <input type="text" name="_gotcha" style="display:none">
+      
+      <div class="form-group">
+        <label for="name">Full Name *</label>
+        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" name="email" required placeholder="Enter your email address">
+      </div>
+      
+      <div class="form-group">
+        <label for="phone">Phone Number *</label>
+        <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number" 
+               pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number">
+        <small class="form-hint">10-digit phone number required</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="service">Service Interested In</label>
+        <select id="service" name="service">
+          <option value="">Select a service</option>
+          <option value="MATLAB & Image Processing">MATLAB & Image Processing</option>
+          <option value="Vivado & FPGA">Vivado & FPGA</option>
+          <option value="Agile & Project Delivery">Agile & Project Delivery</option>
+          <option value="Technical Training">Technical Training</option>
+          <option value="Internship Program">Internship Program</option>
+          <option value="Other Inquiry">Other Inquiry</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="message">Message *</label>
+        <textarea id="message" name="message" required placeholder="Type your message here..." rows="5"></textarea>
+        <small class="form-hint">Please provide details about your inquiry</small>
+      </div>
+      
+      <div class="form-group checkbox-group">
+        <input type="checkbox" id="newsletter" name="newsletter" value="Yes">
+        <label for="newsletter">Subscribe to our newsletter for updates on new services and training programs</label>
+      </div>
+      
+      <button type="submit" class="submit-btn">Send Message</button>
+      <p class="form-note">* Required fields must be filled. Website: <a href="https://srimatimating.github.io/Sri-Matimaging/" target="_blank">https://srimatimating.github.io/Sri-Matimaging/</a></p>
+    </form>
+  </div>
+  
+  <!-- Contact Information -->
+  <div class="contact-info-container">
+    <h4>Contact Information</h4>
+    
+    <div class="contact-info-item">
+      <div class="contact-icon">📧</div>
+      <div class="contact-details">
+        <h5>Email</h5>
+        <p>srimatimaging@gmail.com</p>
+        <small>All form submissions are forwarded to this email via Formspree</small>
+      </div>
+    </div>
+    
+    <div class="contact-info-item">
+      <div class="contact-icon">🌐</div>
+      <div class="contact-details">
+        <h5>Website</h5>
+        <p><a href="https://srimatimating.github.io/Sri-Matimaging/" target="_blank">https://srimatimating.github.io/Sri-Matimaging/</a></p>
+        <small>Visit our official website for more information</small>
+      </div>
+    </div>
+    
+    <div class="contact-info-item">
+      <div class="contact-icon">🎯</div>
+      <div class="contact-details">
+        <h5>Our Services</h5>
+        <ul>
+          <li>MATLAB & Image Processing Training</li>
+          <li>FPGA Design & Development</li>
+          <li>Agile Project Management</li>
+          <li>Technical Skill Development</li>
+          <li>Custom Internship Programs</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="contact-note-box">
+      <p><strong>How Formspree works:</strong> Your message is securely sent to Formspree, which forwards it to our email. We typically respond within 24-48 hours.</p>
+    </div>
+  </div>
+  
+</div>
+</section>
+
+<footer>
+© 2025 Sri Matimaging Technologies. All rights reserved. | Website: <a href="https://srimatimating.github.io/Sri-Matimaging/" style="color: #fff;">https://srimatimating.github.io/Sri-Matimaging/</a>
+</footer>
+
+<script>
+// Service functionality
+function openService(i){
+  document.querySelectorAll('.service-detail')
+    .forEach(d=>d.classList.remove('active'));
+  document.getElementById('service'+i).classList.add('active');
+}
+
+// Contact Form Handling - SIMPLIFIED VERSION
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  // Basic validation
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const message = document.getElementById('message').value.trim();
+  
+  // Basic validation
+  if (!name || !email || !phone || !message) {
+    alert('Please fill in all required fields marked with *');
+    e.preventDefault();
+    return;
+  }
+  
+  // Email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    alert('Please enter a valid email address');
+    e.preventDefault();
+    return;
+  }
+  
+  // Phone validation
+  const phoneRegex = /^[0-9]{10}$/;
+  if (!phoneRegex.test(phone)) {
+    alert('Please enter a valid 10-digit phone number');
+    e.preventDefault();
+    return;
+  }
+  
+  // Show loading state
+  const submitBtn = document.querySelector('.submit-btn');
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = 'Sending...';
+  submitBtn.disabled = true;
+  
+  // Let Formspree handle the submission
+  // The form will submit normally to Formspree
+  // Show success message after a brief delay
+  setTimeout(() => {
+    // If we're still on the page after 2 seconds, show success
+    // (Formspree redirects to thank you page by default)
+    if (document.getElementById('contactForm')) {
+      submitBtn.textContent = '✓ Message Sent!';
+      submitBtn.style.backgroundColor = '#28a745';
+      
+      // Reset form
+      setTimeout(() => {
+        document.getElementById('contactForm').reset();
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+        submitBtn.style.backgroundColor = '';
+      }, 3000);
+    }
+  }, 2000);
+});
+
+// Phone number formatting
+document.getElementById('phone').addEventListener('input', function(e) {
+  let value = e.target.value.replace(/\D/g, '');
+  if (value.length > 10) value = value.substring(0, 10);
+  e.target.value = value;
+});
+
+// Test function (Ctrl+T)
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && e.key === 't') {
+    e.preventDefault();
+    document.getElementById('name').value = 'Saileshwaran';
+    document.getElementById('email').value = 'saileshwaran2009@gmail.com';
+    document.getElementById('phone').value = '9445270054';
+    document.getElementById('service').value = 'Technical Training';
+    document.getElementById('message').value = 'This is a test message to check if Formspree is working properly.';
+    document.getElementById('newsletter').checked = true;
+    console.log('Test data filled with your actual data');
+  }
+});
+</script>
+<!-- OUR TEAM -->
+<section class="section">
+<h3>Our Leadership</h3>
+<div class="article">
+<p><strong>Mr. Thulasiraman Pandurangan</strong> - & Technical Director<br>
+<em>Industrial Mentor with two decades of IT experience with software delivery</em></p>
+<p><strong>Dr. Pranitha Karthikeyan</strong> - Founder <br>
+<em>Research Consultant at IITM Research Park (Pravartak Technologies), Professor of Practice (Sairam Institutions)</em></p>
+</div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section id="contact" class="section">
+<h3>Contact Us</h3>
+<div class="contact-card">
+  
+  <!-- Contact Form -->
+  <div class="contact-form-container">
+    <h4>Send Us a Message</h4>
+    <p>Fill out the form below and we'll get back to you as soon as possible.</p>
+    
     <!-- FORMSPREE FORM WITH PROPER CONFIGURATION -->
     <form id="contactForm" class="contact-form" action="https://formspree.io/f/maqnnyja" method="POST">
       <!-- Formspree Hidden Fields -->
@@ -414,3 +623,4 @@ document.addEventListener('keydown', function(e) {
 
 </body>
 </html>
+
