@@ -30,26 +30,6 @@
   </div>
 </section>
 
-<!-- ABOUT US -->
-<section class="section">
-<h3>About Us</h3>
-<div class="article">
-<p><strong>Sri Matimaging Technologies</strong> is a premier technology solutions provider specializing in imaging technologies, software development, and IT consulting services.</p>
-<p>With years of expertise in the field, we deliver cutting-edge solutions to businesses and educational institutions.</p>
-</div>
-</section>
-
-<!-- OUR TEAM -->
-<section class="section">
-<h3>Our Leadership</h3>
-<div class="article">
-<p><strong>Mr. Thulasiraman Pandurangan</strong> - & Technical Director<br>
-<em>Industrial Mentor with two decades of IT experience with software delivery</em></p>
-<p><strong>Dr. Pranitha Karthikeyan</strong> - Founder <br>
-<em>Research Consultant at IITM Research Park (Pravartak Technologies), Professor of Practice (Sairam Institutions)</em></p>
-</div>
-</section>
-
 <!-- SERVICES -->
 <section id="services" class="section">
 <h3>Our Services & Training Programs</h3>
@@ -163,6 +143,26 @@
   </div>
 </section>
 
+<!-- ABOUT US -->
+<section class="section">
+<h3>About Us</h3>
+<div class="article">
+<p><strong>Sri Matimaging Technologies</strong> is a premier technology solutions provider specializing in imaging technologies, software development, and IT consulting services.</p>
+<p>With years of expertise in the field, we deliver cutting-edge solutions to businesses and educational institutions.</p>
+</div>
+</section>
+
+<!-- OUR TEAM -->
+<section class="section">
+<h3>Our Leadership</h3>
+<div class="article">
+<p><strong>Mr. Thulasiraman Pandurangan</strong> - & Technical Director<br>
+<em>Industrial Mentor with two decades of IT experience with software delivery</em></p>
+<p><strong>Dr. Pranitha Karthikeyan</strong> - Founder <br>
+<em>Research Consultant at IITM Research Park (Pravartak Technologies), Professor of Practice (Sairam Institutions)</em></p>
+</div>
+</section>
+
 <!-- CONTACT SECTION -->
 <section id="contact" class="section">
 <h3>Contact Us</h3>
@@ -173,12 +173,13 @@
     <h4>Send Us a Message</h4>
     <p>Fill out the form below and we'll get back to you as soon as possible.</p>
     
-    <form id="contactForm" class="contact-form" action="https://formsubmit.co/srimatimaging@gmail.com" method="POST">
-      <!-- Hidden inputs for FormSubmit -->
-      <input type="hidden" name="_subject" value="New Contact Form Submission - Sri Matimaging">
-      <input type="hidden" name="_template" value="table">
-      <input type="text" name="_honey" style="display:none">
-      <input type="hidden" name="_captcha" value="false">
+    <!-- REPLACE THIS ACTION URL WITH YOUR FORMSPREE URL -->
+    <form id="contactForm" class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID_HERE" method="POST">
+      <!-- Formspree configuration -->
+      <input type="hidden" name="_subject" value="New Contact Form Submission - Sri Matimaging Technologies">
+      <input type="hidden" name="_replyto" value="srimatimaging@gmail.com">
+      <input type="hidden" name="_cc" value="srimatimaging@gmail.com">
+      <input type="text" name="_gotcha" style="display:none">
       
       <div class="form-group">
         <label for="name">Full Name *</label>
@@ -217,12 +218,12 @@
       </div>
       
       <div class="form-group checkbox-group">
-        <input type="checkbox" id="newsletter" name="newsletter">
+        <input type="checkbox" id="newsletter" name="newsletter" value="yes">
         <label for="newsletter">Subscribe to our newsletter for updates on new services and training programs</label>
       </div>
       
       <button type="submit" class="submit-btn">Send Message</button>
-      <p class="form-note">* Required fields must be filled. Form will be sent to srimatimaging@gmail.com</p>
+      <p class="form-note">* Required fields must be filled. Website: <a href="https://srimatimating.github.io/Sri-Matimaging/" target="_blank">https://srimatimating.github.io/Sri-Matimaging/</a></p>
     </form>
   </div>
   
@@ -235,7 +236,16 @@
       <div class="contact-details">
         <h5>Email</h5>
         <p>srimatimaging@gmail.com</p>
-        <small>All form submissions go directly to this email</small>
+        <small>All form submissions are forwarded to this email via Formspree</small>
+      </div>
+    </div>
+    
+    <div class="contact-info-item">
+      <div class="contact-icon">🌐</div>
+      <div class="contact-details">
+        <h5>Website</h5>
+        <p><a href="https://srimatimating.github.io/Sri-Matimaging/" target="_blank">https://srimatimating.github.io/Sri-Matimaging/</a></p>
+        <small>Visit our official website for more information</small>
       </div>
     </div>
     
@@ -254,7 +264,7 @@
     </div>
     
     <div class="contact-note-box">
-      <p><strong>How it works:</strong> When you submit the form, it will be sent directly to our email address. We'll respond as soon as possible.</p>
+      <p><strong>How Formspree works:</strong> Your message is securely sent to Formspree, which forwards it to our email. We typically respond within 24-48 hours.</p>
     </div>
   </div>
   
@@ -262,7 +272,7 @@
 </section>
 
 <footer>
-© 2025 Sri Matimaging Technologies. All rights reserved.
+© 2025 Sri Matimaging Technologies. All rights reserved. | Website: <a href="https://srimatimating.github.io/Sri-Matimaging/" style="color: #fff;">https://srimatimating.github.io/Sri-Matimaging/</a>
 </footer>
 
 <script>
@@ -273,17 +283,25 @@ function openService(i){
   document.getElementById('service'+i).classList.add('active');
 }
 
-// Contact Form Validation
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-  const name = document.getElementById('name').value;
-  const email = document.getElementById('email').value;
-  const phone = document.getElementById('phone').value;
-  const message = document.getElementById('message').value;
+// Contact Form Validation and Formspree handling
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
+  e.preventDefault(); // Prevent default form submission
+  
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const message = document.getElementById('message').value.trim();
   
   // Basic validation
   if (!name || !email || !phone || !message) {
     alert('Please fill in all required fields marked with *');
-    e.preventDefault();
+    return;
+  }
+  
+  // Email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    alert('Please enter a valid email address');
     return;
   }
   
@@ -291,24 +309,78 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
   const phoneRegex = /^[0-9]{10}$/;
   if (!phoneRegex.test(phone)) {
     alert('Please enter a valid 10-digit phone number');
-    e.preventDefault();
     return;
   }
   
   // Show loading state
   const submitBtn = document.querySelector('.submit-btn');
   const originalText = submitBtn.textContent;
+  const originalBgColor = submitBtn.style.backgroundColor;
   submitBtn.textContent = 'Sending...';
   submitBtn.disabled = true;
+  submitBtn.style.backgroundColor = '#ff9800';
   
-  // Form will automatically submit to FormSubmit
-  // which will forward to srimatimaging@gmail.com
-  
-  // Re-enable button after 3 seconds in case submission fails
-  setTimeout(() => {
-    submitBtn.textContent = originalText;
+  try {
+    // Get the form data
+    const formData = new FormData(this);
+    
+    // Add website URL to form data
+    formData.append('website', 'https://srimatimating.github.io/Sri-Matimaging/');
+    
+    // Send to Formspree
+    const response = await fetch(this.action, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+    
+    if (response.ok) {
+      // Success
+      submitBtn.textContent = '✓ Message Sent!';
+      submitBtn.style.backgroundColor = '#28a745';
+      
+      // Show success message
+      const successMsg = document.createElement('div');
+      successMsg.className = 'success-message';
+      successMsg.innerHTML = '✅ Thank you! Your message has been sent successfully. We\'ll get back to you soon.';
+      successMsg.style.cssText = 'background: #d4edda; color: #155724; padding: 15px; border-radius: 6px; margin-top: 20px; border: 1px solid #c3e6cb;';
+      
+      // Insert success message
+      const formContainer = document.querySelector('.contact-form-container');
+      formContainer.appendChild(successMsg);
+      
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        document.getElementById('contactForm').reset();
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+        submitBtn.style.backgroundColor = originalBgColor;
+        successMsg.remove();
+      }, 5000);
+    } else {
+      // Error from Formspree
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Failed to send message. Server responded with status: ' + response.status);
+    }
+  } catch (error) {
+    // Error handling
+    console.error('Form submission error:', error);
+    submitBtn.textContent = 'Try Again';
     submitBtn.disabled = false;
-  }, 3000);
+    submitBtn.style.backgroundColor = '#dc3545';
+    
+    // Show error message
+    alert('Sorry, there was an error sending your message. Please try again. If the problem persists, you can email us directly at srimatimaging@gmail.com');
+    
+    // Reset button after 5 seconds
+    setTimeout(() => {
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+      submitBtn.style.backgroundColor = originalBgColor;
+    }, 5000);
+  }
 });
 
 // Phone number formatting
@@ -316,6 +388,19 @@ document.getElementById('phone').addEventListener('input', function(e) {
   let value = e.target.value.replace(/\D/g, '');
   if (value.length > 10) value = value.substring(0, 10);
   e.target.value = value;
+});
+
+// Auto-fill form with test data for debugging (remove in production)
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && e.key === 't') { // Ctrl+T for test data
+    e.preventDefault();
+    document.getElementById('name').value = 'Test User';
+    document.getElementById('email').value = 'test@example.com';
+    document.getElementById('phone').value = '9876543210';
+    document.getElementById('service').value = 'matlab';
+    document.getElementById('message').value = 'This is a test message from the contact form.';
+    console.log('Test data filled');
+  }
 });
 </script>
 
