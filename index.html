@@ -39,17 +39,17 @@ body {
     justify-content: space-between !important;
     padding: 10px 5% !important;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
-    height: 320px !important; /* Navbar height for 300px logo */
+    height: 290px !important; /* Navbar height for 270px logo */
 }
 
 /* Add padding to body to account for fixed navbar */
 body {
-    padding-top: 330px !important; /* Body padding for 300px logo */
+    padding-top: 300px !important; /* Body padding for 270px logo */
 }
 
-/* Style for navbar logo - ENLARGED TO 300px */
+/* Style for navbar logo - ENLARGED TO 270px */
 .navbar img {
-    height: 300px !important; /* Increased from 350px to 300px */
+    height: 270px !important; /* Increased from 300px to 270px */
     width: auto !important;
     margin-left: 15% !important;
 }
@@ -59,7 +59,7 @@ body {
     display: flex !important;
     gap: 25px !important;
     margin-right: 10% !important;
-    margin-top: 130px !important; /* Margin to align with 300px logo */
+    margin-top: 120px !important; /* Margin to align with 270px logo */
 }
 
 .nav-links a {
@@ -79,10 +79,10 @@ body {
 <body>
 
 <!-- NAVBAR -->
-<div class="navbar" style="position: fixed; top: 0; width: 100%; z-index: 1000; background: white; display: flex; align-items: center; justify-content: space-between; padding: 10px 5%; box-shadow: 0 2px 10px rgba(0,0,0,0.1); height: 320px;">
-  <img src="logo.png?v=3" style="height: 300px; width: auto; margin-left: 15%;">
+<div class="navbar" style="position: fixed; top: 0; width: 100%; z-index: 1000; background: white; display: flex; align-items: center; justify-content: space-between; padding: 10px 5%; box-shadow: 0 2px 10px rgba(0,0,0,0.1); height: 290px;">
+  <img src="logo.png?v=3" style="height: 270px; width: auto; margin-left: 15%;">
   
-  <div class="nav-links" style="display: flex; gap: 25px; margin-right: 10%; margin-top: 130px;">
+  <div class="nav-links" style="display: flex; gap: 25px; margin-right: 10%; margin-top: 120px;">
     <a href="#home" style="text-decoration: none; color: #333; font-weight: 500; font-size: 16px; transition: color 0.3s;">Home</a>
     <a href="#services" style="text-decoration: none; color: #333; font-weight: 500; font-size: 16px; transition: color 0.3s;">Services</a>
     <a href="#projects" style="text-decoration: none; color: #333; font-weight: 500; font-size: 16px; transition: color 0.3s;">Projects</a>
@@ -424,7 +424,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetElement = document.querySelector(href);
             if (targetElement) {
                 // Calculate position - account for large navbar
-                const navbarHeight = document.querySelector('.navbar').offsetHeight || 320;
+                const navbarHeight = document.querySelector('.navbar').offsetHeight || 290;
                 const elementPosition = targetElement.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - navbarHeight - 20;
                 
@@ -445,7 +445,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const hash = window.location.hash;
             const targetElement = document.querySelector(hash);
             if (targetElement) {
-                const navbarHeight = document.querySelector('.navbar').offsetHeight || 320;
+                const navbarHeight = document.querySelector('.navbar').offsetHeight || 290;
                 const elementPosition = targetElement.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - navbarHeight - 20;
                 
