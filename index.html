@@ -39,19 +39,45 @@ body {
     justify-content: space-between !important;
     padding: 10px 5% !important;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
-    height: 170px !important; /* Reduced from 270px to 170px */
+    height: 100px !important; /* Reduced height for text logo */
 }
 
 /* Add padding to body to account for fixed navbar */
 body {
-    padding-top: 180px !important; /* Reduced from 280px to 180px */
+    padding-top: 110px !important; /* Reduced from 280px to 110px */
 }
 
-/* Style for navbar logo - MEDIUM SIZE 150px */
-.navbar img {
-    height: 150px !important; /* Reduced from 250px to 150px */
-    width: auto !important;
+/* TEXT LOGO STYLES - MEDIUM SIZE */
+.text-logo {
     margin-left: 15% !important;
+    text-align: left;
+}
+
+.text-logo .logo-line-1 {
+    font-size: 32px !important; /* Medium size */
+    font-weight: 700 !important;
+    color: #1a3e72 !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    letter-spacing: 1px !important;
+}
+
+.text-logo .logo-line-2 {
+    font-size: 28px !important; /* Medium size */
+    font-weight: 600 !important;
+    color: #1a3e72 !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    letter-spacing: 0.5px !important;
+}
+
+.text-logo .logo-line-3 {
+    font-size: 20px !important; /* Medium size */
+    font-weight: 500 !important;
+    color: #666 !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    letter-spacing: 1px !important;
 }
 
 /* Style for nav links */
@@ -59,7 +85,7 @@ body {
     display: flex !important;
     gap: 25px !important;
     margin-right: 10% !important;
-    margin-top: 50px !important; /* Reduced from 110px to 50px */
+    margin-top: 20px !important; /* Adjusted for text logo */
 }
 
 .nav-links a {
@@ -79,10 +105,15 @@ body {
 <body>
 
 <!-- NAVBAR -->
-<div class="navbar" style="position: fixed; top: 0; width: 100%; z-index: 1000; background: white; display: flex; align-items: center; justify-content: space-between; padding: 10px 5%; box-shadow: 0 2px 10px rgba(0,0,0,0.1); height: 170px;">
-  <img src="logo.png?v=3" style="height: 150px; width: auto; margin-left: 15%;">
+<div class="navbar" style="position: fixed; top: 0; width: 100%; z-index: 1000; background: white; display: flex; align-items: center; justify-content: space-between; padding: 10px 5%; box-shadow: 0 2px 10px rgba(0,0,0,0.1); height: 100px;">
+  <!-- TEXT LOGO -->
+  <div class="text-logo" style="margin-left: 15%; text-align: left;">
+    <div class="logo-line-1" style="font-size: 32px; font-weight: 700; color: #1a3e72; line-height: 1; margin: 0; letter-spacing: 1px;">SRI</div>
+    <div class="logo-line-2" style="font-size: 28px; font-weight: 600; color: #1a3e72; line-height: 1; margin: 0; letter-spacing: 0.5px;">MATIMAGING</div>
+    <div class="logo-line-3" style="font-size: 20px; font-weight: 500; color: #666; line-height: 1; margin: 0; letter-spacing: 1px;">TECHNOLOGIES</div>
+  </div>
   
-  <div class="nav-links" style="display: flex; gap: 25px; margin-right: 10%; margin-top: 50px;">
+  <div class="nav-links" style="display: flex; gap: 25px; margin-right: 10%; margin-top: 20px;">
     <a href="#home" style="text-decoration: none; color: #333; font-weight: 500; font-size: 16px; transition: color 0.3s;">Home</a>
     <a href="#services" style="text-decoration: none; color: #333; font-weight: 500; font-size: 16px; transition: color 0.3s;">Services</a>
     <a href="#projects" style="text-decoration: none; color: #333; font-weight: 500; font-size: 16px; transition: color 0.3s;">Projects</a>
@@ -424,7 +455,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetElement = document.querySelector(href);
             if (targetElement) {
                 // Calculate position - account for large navbar
-                const navbarHeight = document.querySelector('.navbar').offsetHeight || 170; // Updated to 170px
+                const navbarHeight = document.querySelector('.navbar').offsetHeight || 100; // Updated to 100px
                 const elementPosition = targetElement.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - navbarHeight - 20;
                 
@@ -445,7 +476,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const hash = window.location.hash;
             const targetElement = document.querySelector(hash);
             if (targetElement) {
-                const navbarHeight = document.querySelector('.navbar').offsetHeight || 170; // Updated to 170px
+                const navbarHeight = document.querySelector('.navbar').offsetHeight || 100; // Updated to 100px
                 const elementPosition = targetElement.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - navbarHeight - 20;
                 
