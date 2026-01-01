@@ -153,14 +153,10 @@
     <h4>Send Us a Message</h4>
     <p>Fill out the form below and we'll get back to you as soon as possible.</p>
     
-    <!-- FORMSPREE FORM - WORKING VERSION -->
-    <form id="contactForm" class="contact-form" action="https://formspree.io/f/maqnnyja" method="POST" target="_blank">
+    <!-- FORMSPREE FORM - SIMPLE & RELIABLE -->
+    <form id="contactForm" class="contact-form" action="https://formspree.io/f/maqnnyja" method="POST">
       <!-- Formspree Hidden Fields -->
       <input type="hidden" name="_subject" value="New Contact Form Submission - Sri Matimaging Technologies">
-      <input type="hidden" name="_replyto" value="_replyto">
-      <input type="text" name="_gotcha" style="display:none">
-      <!-- ADD THIS to redirect back to your site after submission -->
-      <input type="hidden" name="_next" value="https://srimatimating.github.io/Sri-Matimaging/#contact">
       
       <div class="form-group">
         <label for="name">Full Name *</label>
@@ -207,15 +203,8 @@
       <p class="form-note">* Required fields must be filled. Website: <a href="https://srimatimating.github.io/Sri-Matimaging/" target="_blank">https://srimatimating.github.io/Sri-Matimaging/</a></p>
     </form>
     
-    <!-- Success Message (initially hidden) -->
-    <div id="successMessage" style="display: none; background: #d4edda; color: #155724; padding: 15px; border-radius: 6px; margin-top: 20px; border: 1px solid #c3e6cb;">
-      ✅ <strong>Thank you!</strong> Your message has been sent successfully. We'll get back to you within 24-48 hours.
-    </div>
-    
-    <!-- Error Message (initially hidden) -->
-    <div id="errorMessage" style="display: none; background: #f8d7da; color: #721c24; padding: 15px; border-radius: 6px; margin-top: 20px; border: 1px solid #f5c6cb;">
-      ❌ <strong>Error!</strong> There was a problem sending your message. Please email us directly at <a href="mailto:srimatimaging@gmail.com">srimatimaging@gmail.com</a>
-    </div>
+    <!-- Simple Success Message -->
+    <div id="formFeedback" style="display: none; text-align: center; padding: 20px; margin-top: 20px; border-radius: 8px;"></div>
   </div>
   
   <!-- Contact Information -->
@@ -227,7 +216,7 @@
       <div class="contact-details">
         <h5>Email</h5>
         <p>srimatimaging@gmail.com</p>
-        <small>All form submissions are forwarded to this email via Formspree</small>
+        <small>All form submissions go to this email via Formspree</small>
       </div>
     </div>
     
@@ -236,7 +225,7 @@
       <div class="contact-details">
         <h5>Website</h5>
         <p><a href="https://srimatimating.github.io/Sri-Matimaging/" target="_blank">https://srimatimating.github.io/Sri-Matimaging/</a></p>
-        <small>Visit our official website for more information</small>
+        <small>Visit our official website</small>
       </div>
     </div>
     
@@ -255,7 +244,7 @@
     </div>
     
     <div class="contact-note-box">
-      <p><strong>How Formspree works:</strong> Your message is securely sent to Formspree, which forwards it to our email. We typically respond within 24-48 hours.</p>
+      <p><strong>How it works:</strong> Fill the form and click Send. Formspree will forward your message to our email. We respond within 24-48 hours.</p>
     </div>
   </div>
   
@@ -267,6 +256,56 @@
 </footer>
 
 <script>
+// Service functionality
+function openService(i){
+  document.querySelectorAll('.service-detail')
+    .forEach(d=>d.classList.remove('active'));
+  document.getElementById('service'+i).classList.add('active');
+}
+
+// SIMPLE FORM HANDLING - NO COMPLEX JAVASCRIPT
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  // Only do basic validation, then let Formspree handle it
+  
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const message = document.getElementById('message').value.trim();
+  
+  // Quick validation
+  if (!name || !email || !phone || !message) {
+    e.preventDefault();
+    alert('Please fill in all required fields marked with *');
+    return;
+  }
+  
+  // Phone format check
+  const phoneRegex = /^[0-9]{10}$/;
+  if (!phoneRegex.test(phone)) {
+    e.preventDefault();
+    alert('Please enter a valid 10-digit phone number');
+    return;
+  }
+  
+  // If validation passes, show sending state briefly
+  const submitBtn = document.querySelector('.submit-btn');
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = 'Sending...';
+  submitBtn.disabled = true;
+  
+  // Form will submit to Formspree now
+  // Let it submit naturally
+});
+
+// Phone number formatting only
+document.getElementById('phone').addEventListener('input', function(e) {
+  let value = e.target.value.replace(/\D/g, '');
+  if (value.length > 10) value = value.substring(0, 10);
+  e.target.value = value;
+});
+
+// Remove Ctrl+T test since it's causing confusion
+</script>
 // Service functionality
 function openService(i){
   document.querySelectorAll('.service-detail')
@@ -834,5 +873,6 @@ document.addEventListener('keydown', function(e) {
 
 </body>
 </html>
+
 
 
