@@ -173,13 +173,16 @@
     <h4>Send Us a Message</h4>
     <p>Fill out the form below and we'll get back to you as soon as possible.</p>
     
-    <!-- REPLACE THIS ACTION URL WITH YOUR FORMSPREE URL -->
-    <form id="contactForm" class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID_HERE" method="POST">
-      <!-- Formspree configuration -->
+    <!-- FORMSPREE FORM WITH PROPER CONFIGURATION -->
+    <form id="contactForm" class="contact-form" action="https://formspree.io/f/maqnnyja" method="POST">
+      <!-- Formspree Hidden Fields -->
       <input type="hidden" name="_subject" value="New Contact Form Submission - Sri Matimaging Technologies">
-      <input type="hidden" name="_replyto" value="srimatimaging@gmail.com">
-      <input type="hidden" name="_cc" value="srimatimaging@gmail.com">
+      <input type="hidden" name="_replyto" value="_replyto">
       <input type="text" name="_gotcha" style="display:none">
+      <input type="hidden" name="_format" value="plain">
+      
+      <!-- Website Info (hidden field) -->
+      <input type="hidden" name="website" value="https://srimatimating.github.io/Sri-Matimaging/">
       
       <div class="form-group">
         <label for="name">Full Name *</label>
@@ -202,12 +205,12 @@
         <label for="service">Service Interested In</label>
         <select id="service" name="service">
           <option value="">Select a service</option>
-          <option value="matlab">MATLAB & Image Processing</option>
-          <option value="fpga">Vivado & FPGA</option>
-          <option value="agile">Agile & Project Delivery</option>
-          <option value="training">Technical Training</option>
-          <option value="internship">Internship Program</option>
-          <option value="other">Other Inquiry</option>
+          <option value="MATLAB & Image Processing">MATLAB & Image Processing</option>
+          <option value="Vivado & FPGA">Vivado & FPGA</option>
+          <option value="Agile & Project Delivery">Agile & Project Delivery</option>
+          <option value="Technical Training">Technical Training</option>
+          <option value="Internship Program">Internship Program</option>
+          <option value="Other Inquiry">Other Inquiry</option>
         </select>
       </div>
       
@@ -218,7 +221,7 @@
       </div>
       
       <div class="form-group checkbox-group">
-        <input type="checkbox" id="newsletter" name="newsletter" value="yes">
+        <input type="checkbox" id="newsletter" name="newsletter" value="Yes">
         <label for="newsletter">Subscribe to our newsletter for updates on new services and training programs</label>
       </div>
       
@@ -283,7 +286,7 @@ function openService(i){
   document.getElementById('service'+i).classList.add('active');
 }
 
-// Contact Form Validation and Formspree handling
+// Contact Form Handling
 document.getElementById('contactForm').addEventListener('submit', async function(e) {
   e.preventDefault(); // Prevent default form submission
   
@@ -324,9 +327,6 @@ document.getElementById('contactForm').addEventListener('submit', async function
     // Get the form data
     const formData = new FormData(this);
     
-    // Add website URL to form data
-    formData.append('website', 'https://srimatimating.github.io/Sri-Matimaging/');
-    
     // Send to Formspree
     const response = await fetch(this.action, {
       method: 'POST',
@@ -351,7 +351,7 @@ document.getElementById('contactForm').addEventListener('submit', async function
       const formContainer = document.querySelector('.contact-form-container');
       formContainer.appendChild(successMsg);
       
-      // Reset form after 3 seconds
+      // Reset form after 5 seconds
       setTimeout(() => {
         document.getElementById('contactForm').reset();
         submitBtn.textContent = originalText;
@@ -359,6 +359,12 @@ document.getElementById('contactForm').addEventListener('submit', async function
         submitBtn.style.backgroundColor = originalBgColor;
         successMsg.remove();
       }, 5000);
+      
+      // Also show alert
+      setTimeout(() => {
+        alert('Thank you! Your message has been sent successfully. We will respond within 24-48 hours.');
+      }, 100);
+      
     } else {
       // Error from Formspree
       const errorData = await response.json();
@@ -390,16 +396,18 @@ document.getElementById('phone').addEventListener('input', function(e) {
   e.target.value = value;
 });
 
-// Auto-fill form with test data for debugging (remove in production)
+// Formspree TEST: Auto-fill form with test data (Ctrl+T)
 document.addEventListener('keydown', function(e) {
   if (e.ctrlKey && e.key === 't') { // Ctrl+T for test data
     e.preventDefault();
     document.getElementById('name').value = 'Test User';
     document.getElementById('email').value = 'test@example.com';
     document.getElementById('phone').value = '9876543210';
-    document.getElementById('service').value = 'matlab';
-    document.getElementById('message').value = 'This is a test message from the contact form.';
-    console.log('Test data filled');
+    document.getElementById('service').value = 'MATLAB & Image Processing';
+    document.getElementById('message').value = 'This is a test message from the contact form on Sri Matimaging Technologies website. Website URL: https://srimatimating.github.io/Sri-Matimaging/';
+    document.getElementById('newsletter').checked = true;
+    console.log('✅ Test data filled for Formspree testing');
+    alert('Test data filled! You can now submit to test Formspree integration.');
   }
 });
 </script>
