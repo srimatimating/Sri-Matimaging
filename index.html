@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>Sri Matimaging Technologies</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=3">
 <style>
 /* FORCE CLEAR CACHE AND FIX NAVBAR SCROLLING */
 html {
@@ -20,6 +20,7 @@ body {
 #home, 
 #services, 
 #projects, 
+#about,
 #contact {
     scroll-margin-top: 100px !important;
     padding-top: 30px !important;
@@ -46,7 +47,7 @@ body {
 
 <!-- NAVBAR -->
 <div class="navbar" style="position: fixed; top: 0; width: 100%; z-index: 1000; background: white;">
-  <img src="logo.png">
+  <img src="logo.png?v=3">
   <h1>Sri Matimaging Technologies</h1>
   
   <div class="nav-links">
@@ -179,15 +180,6 @@ body {
   </div>
 </section>
 
-<!-- ABOUT US -->
-<section id="about" class="section" style="scroll-margin-top: 100px; padding-top: 30px; margin-top: -30px;">
-<h3>About Us</h3>
-<div class="article">
-<p><strong>Sri Matimaging Technologies</strong> is a premier technology solutions provider specializing in imaging technologies, software development, and IT consulting services.</p>
-<p>With years of expertise in the field, we deliver cutting-edge solutions to businesses and educational institutions.</p>
-</div>
-</section>
-
 <!-- OUR TEAM -->
 <section class="section">
 <h3>Our Leadership</h3>
@@ -196,6 +188,15 @@ body {
 <em>Industrial Mentor with two decades of IT experience with software delivery</em></p>
 <p><strong>Dr. Pranitha Karthikeyan</strong> - Founder <br>
 <em>Research Consultant at IITM Research Park (Pravartak Technologies), Professor of Practice (Sairam Institutions)</em></p>
+</div>
+</section>
+
+<!-- ABOUT US -->
+<section id="about" class="section" style="scroll-margin-top: 100px; padding-top: 30px; margin-top: -30px;">
+<h3>About Us</h3>
+<div class="article">
+<p><strong>Sri Matimaging Technologies</strong> is a premier technology solutions provider specializing in imaging technologies, software development, and IT consulting services.</p>
+<p>With years of expertise in the field, we deliver cutting-edge solutions to businesses and educational institutions.</p>
 </div>
 </section>
 
@@ -309,14 +310,21 @@ body {
 </footer>
 
 <script>
-// Force clear cache for GitHub Pages
+// Force clear cache for GitHub Pages - AGGRESSIVE CACHE BUSTING
 if (window.location.hostname.includes('github.io') || window.location.hostname.includes('github.com')) {
-    // Add cache busting for GitHub Pages
-    document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
-        if (link.href.includes('style.css')) {
-            link.href = link.href.split('?')[0] + '?v=' + new Date().getTime();
+    // Add cache busting for ALL resources
+    document.querySelectorAll('link[rel="stylesheet"], script[src], img[src]').forEach(element => {
+        if (element.href && !element.href.includes('?')) {
+            element.href = element.href + '?v=' + new Date().getTime();
+        }
+        if (element.src && !element.src.includes('?')) {
+            element.src = element.src + '?v=' + new Date().getTime();
         }
     });
+    
+    // Clear localStorage and sessionStorage
+    localStorage.clear();
+    sessionStorage.clear();
 }
 
 // Service functionality
