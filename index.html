@@ -174,6 +174,39 @@
                pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number">
         <small class="form-hint">10-digit phone number required</small>
       </div>
+     <!-- CONTACT SECTION -->
+<section id="contact" class="section">
+<h3>Contact Us</h3>
+<div class="contact-card">
+  
+  <!-- Contact Form -->
+  <div class="contact-form-container">
+    <h4>Send Us a Message</h4>
+    <p>Fill out the form below and we'll get back to you as soon as possible.</p>
+    
+    <!-- FORMSPREE FORM - FINAL WORKING VERSION -->
+    <form id="contactForm" class="contact-form" action="https://formspree.io/f/maqnnyja" method="POST">
+      <!-- Formspree Hidden Fields - CORRECTED -->
+      <input type="hidden" name="_subject" value="New Contact Form Submission - Sri Matimaging Technologies">
+      <!-- REMOVED the _replyto hidden field - Formspree will use the email field automatically -->
+      <input type="text" name="_gotcha" style="display:none">
+      
+      <div class="form-group">
+        <label for="name">Full Name *</label>
+        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" name="email" required placeholder="Enter your email address">
+      </div>
+      
+      <div class="form-group">
+        <label for="phone">Phone Number *</label>
+        <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number" 
+               pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number">
+        <small class="form-hint">10-digit phone number required</small>
+      </div>
       
       <div class="form-group">
         <label for="service">Service Interested In</label>
@@ -202,9 +235,6 @@
       <button type="submit" class="submit-btn">Send Message</button>
       <p class="form-note">* Required fields must be filled. Website: <a href="https://srimatimating.github.io/Sri-Matimaging/" target="_blank">https://srimatimating.github.io/Sri-Matimaging/</a></p>
     </form>
-    
-    <!-- Simple Success Message -->
-    <div id="formFeedback" style="display: none; text-align: center; padding: 20px; margin-top: 20px; border-radius: 8px;"></div>
   </div>
   
   <!-- Contact Information -->
@@ -216,7 +246,7 @@
       <div class="contact-details">
         <h5>Email</h5>
         <p>srimatimaging@gmail.com</p>
-        <small>All form submissions go to this email via Formspree</small>
+        <small>Form submissions go directly to this email</small>
       </div>
     </div>
     
@@ -225,7 +255,6 @@
       <div class="contact-details">
         <h5>Website</h5>
         <p><a href="https://srimatimating.github.io/Sri-Matimaging/" target="_blank">https://srimatimating.github.io/Sri-Matimaging/</a></p>
-        <small>Visit our official website</small>
       </div>
     </div>
     
@@ -244,7 +273,7 @@
     </div>
     
     <div class="contact-note-box">
-      <p><strong>How it works:</strong> Fill the form and click Send. Formspree will forward your message to our email. We respond within 24-48 hours.</p>
+      <p><strong>Note:</strong> After submitting the form, you'll see a confirmation from Formspree.</p>
     </div>
   </div>
   
@@ -263,10 +292,8 @@ function openService(i){
   document.getElementById('service'+i).classList.add('active');
 }
 
-// SIMPLE FORM HANDLING - NO COMPLEX JAVASCRIPT
+// Simple form handling - just basic validation
 document.getElementById('contactForm').addEventListener('submit', function(e) {
-  // Only do basic validation, then let Formspree handle it
-  
   const name = document.getElementById('name').value.trim();
   const email = document.getElementById('email').value.trim();
   const phone = document.getElementById('phone').value.trim();
@@ -287,96 +314,20 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     return;
   }
   
-  // If validation passes, show sending state briefly
-  const submitBtn = document.querySelector('.submit-btn');
-  const originalText = submitBtn.textContent;
-  submitBtn.textContent = 'Sending...';
-  submitBtn.disabled = true;
-  
-  // Form will submit to Formspree now
-  // Let it submit naturally
-});
-
-// Phone number formatting only
-document.getElementById('phone').addEventListener('input', function(e) {
-  let value = e.target.value.replace(/\D/g, '');
-  if (value.length > 10) value = value.substring(0, 10);
-  e.target.value = value;
-});
-
-// Remove Ctrl+T test since it's causing confusion
-</script>
-// Service functionality
-function openService(i){
-  document.querySelectorAll('.service-detail')
-    .forEach(d=>d.classList.remove('active'));
-  document.getElementById('service'+i).classList.add('active');
-}
-
-// Contact Form Handling - PERFECT VERSION
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-  // Don't prevent default - let Formspree handle it
-  
-  // Basic validation
-  const name = document.getElementById('name').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const phone = document.getElementById('phone').value.trim();
-  const message = document.getElementById('message').value.trim();
-  
-  // Basic validation
-  if (!name || !email || !phone || !message) {
-    alert('Please fill in all required fields marked with *');
-    e.preventDefault();
-    return;
-  }
-  
-  // Email validation
+  // Email format check
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
+    e.preventDefault();
     alert('Please enter a valid email address');
-    e.preventDefault();
     return;
   }
   
-  // Phone validation
-  const phoneRegex = /^[0-9]{10}$/;
-  if (!phoneRegex.test(phone)) {
-    alert('Please enter a valid 10-digit phone number');
-    e.preventDefault();
-    return;
-  }
-  
-  // Show loading state
+  // Show sending state
   const submitBtn = document.querySelector('.submit-btn');
-  const originalText = submitBtn.textContent;
   submitBtn.textContent = 'Sending...';
   submitBtn.disabled = true;
   
-  // Hide any previous messages
-  document.getElementById('successMessage').style.display = 'none';
-  document.getElementById('errorMessage').style.display = 'none';
-  
-  // The form will now submit to Formspree
-  // Formspree will redirect back to our site (thanks to _next parameter)
-  
-  // Show success message after 1 second (in case redirect doesn't work)
-  setTimeout(() => {
-    // Only show success if we're still on the page
-    if (document.getElementById('contactForm')) {
-      // Show success message
-      document.getElementById('successMessage').style.display = 'block';
-      
-      // Reset form
-      document.getElementById('contactForm').reset();
-      
-      // Reset button after 5 seconds
-      setTimeout(() => {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-        document.getElementById('successMessage').style.display = 'none';
-      }, 5000);
-    }
-  }, 1000);
+  // Form will submit to Formspree
 });
 
 // Phone number formatting
@@ -385,494 +336,8 @@ document.getElementById('phone').addEventListener('input', function(e) {
   if (value.length > 10) value = value.substring(0, 10);
   e.target.value = value;
 });
-
-// Test function (Ctrl+T)
-document.addEventListener('keydown', function(e) {
-  if (e.ctrlKey && e.key === 't') {
-    e.preventDefault();
-    document.getElementById('name').value = 'Saileshwaran';
-    document.getElementById('email').value = 'saileshwaran2009@gmail.com';
-    document.getElementById('phone').value = '9445270054';
-    document.getElementById('service').value = 'MATLAB & Image Processing';
-    document.getElementById('message').value = 'Hi, this is a test message from the contact form.';
-    document.getElementById('newsletter').checked = true;
-    console.log('✅ Test data filled');
-    alert('Test data filled! You can now submit the form.');
-  }
-});
 </script>
 
-<!-- OUR TEAM -->
-<section class="section">
-<h3>Our Leadership</h3>
-<div class="article">
-<p><strong>Mr. Thulasiraman Pandurangan</strong> - & Technical Director<br>
-<em>Industrial Mentor with two decades of IT experience with software delivery</em></p>
-<p><strong>Dr. Pranitha Karthikeyan</strong> - Founder <br>
-<em>Research Consultant at IITM Research Park (Pravartak Technologies), Professor of Practice (Sairam Institutions)</em></p>
-</div>
-</section>
-
-<!-- CONTACT SECTION -->
-<section id="contact" class="section">
-<h3>Contact Us</h3>
-<div class="contact-card">
-  
-  <!-- Contact Form -->
-  <div class="contact-form-container">
-    <h4>Send Us a Message</h4>
-    <p>Fill out the form below and we'll get back to you as soon as possible.</p>
-    
-    <!-- FORMSPREE FORM - SIMPLIFIED AND WORKING -->
-    <form id="contactForm" class="contact-form" action="https://formspree.io/f/maqnnyja" method="POST">
-      <!-- Formspree Hidden Fields -->
-      <input type="hidden" name="_subject" value="New Contact Form Submission - Sri Matimaging Technologies">
-      <input type="hidden" name="_replyto" value="_replyto">
-      <input type="text" name="_gotcha" style="display:none">
-      
-      <div class="form-group">
-        <label for="name">Full Name *</label>
-        <input type="text" id="name" name="name" required placeholder="Enter your full name">
-      </div>
-      
-      <div class="form-group">
-        <label for="email">Email Address *</label>
-        <input type="email" id="email" name="email" required placeholder="Enter your email address">
-      </div>
-      
-      <div class="form-group">
-        <label for="phone">Phone Number *</label>
-        <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number" 
-               pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number">
-        <small class="form-hint">10-digit phone number required</small>
-      </div>
-      
-      <div class="form-group">
-        <label for="service">Service Interested In</label>
-        <select id="service" name="service">
-          <option value="">Select a service</option>
-          <option value="MATLAB & Image Processing">MATLAB & Image Processing</option>
-          <option value="Vivado & FPGA">Vivado & FPGA</option>
-          <option value="Agile & Project Delivery">Agile & Project Delivery</option>
-          <option value="Technical Training">Technical Training</option>
-          <option value="Internship Program">Internship Program</option>
-          <option value="Other Inquiry">Other Inquiry</option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label for="message">Message *</label>
-        <textarea id="message" name="message" required placeholder="Type your message here..." rows="5"></textarea>
-        <small class="form-hint">Please provide details about your inquiry</small>
-      </div>
-      
-      <div class="form-group checkbox-group">
-        <input type="checkbox" id="newsletter" name="newsletter" value="Yes">
-        <label for="newsletter">Subscribe to our newsletter for updates on new services and training programs</label>
-      </div>
-      
-      <button type="submit" class="submit-btn">Send Message</button>
-      <p class="form-note">* Required fields must be filled. Website: <a href="https://srimatimating.github.io/Sri-Matimaging/" target="_blank">https://srimatimating.github.io/Sri-Matimaging/</a></p>
-    </form>
-  </div>
-  
-  <!-- Contact Information -->
-  <div class="contact-info-container">
-    <h4>Contact Information</h4>
-    
-    <div class="contact-info-item">
-      <div class="contact-icon">📧</div>
-      <div class="contact-details">
-        <h5>Email</h5>
-        <p>srimatimaging@gmail.com</p>
-        <small>All form submissions are forwarded to this email via Formspree</small>
-      </div>
-    </div>
-    
-    <div class="contact-info-item">
-      <div class="contact-icon">🌐</div>
-      <div class="contact-details">
-        <h5>Website</h5>
-        <p><a href="https://srimatimating.github.io/Sri-Matimaging/" target="_blank">https://srimatimating.github.io/Sri-Matimaging/</a></p>
-        <small>Visit our official website for more information</small>
-      </div>
-    </div>
-    
-    <div class="contact-info-item">
-      <div class="contact-icon">🎯</div>
-      <div class="contact-details">
-        <h5>Our Services</h5>
-        <ul>
-          <li>MATLAB & Image Processing Training</li>
-          <li>FPGA Design & Development</li>
-          <li>Agile Project Management</li>
-          <li>Technical Skill Development</li>
-          <li>Custom Internship Programs</li>
-        </ul>
-      </div>
-    </div>
-    
-    <div class="contact-note-box">
-      <p><strong>How Formspree works:</strong> Your message is securely sent to Formspree, which forwards it to our email. We typically respond within 24-48 hours.</p>
-    </div>
-  </div>
-  
-</div>
-</section>
-
-<footer>
-© 2025 Sri Matimaging Technologies. All rights reserved. | Website: <a href="https://srimatimating.github.io/Sri-Matimaging/" style="color: #fff;">https://srimatimating.github.io/Sri-Matimaging/</a>
-</footer>
-
-<script>
-// Service functionality
-function openService(i){
-  document.querySelectorAll('.service-detail')
-    .forEach(d=>d.classList.remove('active'));
-  document.getElementById('service'+i).classList.add('active');
-}
-
-// Contact Form Handling - SIMPLIFIED VERSION
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-  // Basic validation
-  const name = document.getElementById('name').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const phone = document.getElementById('phone').value.trim();
-  const message = document.getElementById('message').value.trim();
-  
-  // Basic validation
-  if (!name || !email || !phone || !message) {
-    alert('Please fill in all required fields marked with *');
-    e.preventDefault();
-    return;
-  }
-  
-  // Email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    alert('Please enter a valid email address');
-    e.preventDefault();
-    return;
-  }
-  
-  // Phone validation
-  const phoneRegex = /^[0-9]{10}$/;
-  if (!phoneRegex.test(phone)) {
-    alert('Please enter a valid 10-digit phone number');
-    e.preventDefault();
-    return;
-  }
-  
-  // Show loading state
-  const submitBtn = document.querySelector('.submit-btn');
-  const originalText = submitBtn.textContent;
-  submitBtn.textContent = 'Sending...';
-  submitBtn.disabled = true;
-  
-  // Let Formspree handle the submission
-  // The form will submit normally to Formspree
-  // Show success message after a brief delay
-  setTimeout(() => {
-    // If we're still on the page after 2 seconds, show success
-    // (Formspree redirects to thank you page by default)
-    if (document.getElementById('contactForm')) {
-      submitBtn.textContent = '✓ Message Sent!';
-      submitBtn.style.backgroundColor = '#28a745';
-      
-      // Reset form
-      setTimeout(() => {
-        document.getElementById('contactForm').reset();
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-        submitBtn.style.backgroundColor = '';
-      }, 3000);
-    }
-  }, 2000);
-});
-
-// Phone number formatting
-document.getElementById('phone').addEventListener('input', function(e) {
-  let value = e.target.value.replace(/\D/g, '');
-  if (value.length > 10) value = value.substring(0, 10);
-  e.target.value = value;
-});
-
-// Test function (Ctrl+T)
-document.addEventListener('keydown', function(e) {
-  if (e.ctrlKey && e.key === 't') {
-    e.preventDefault();
-    document.getElementById('name').value = 'Saileshwaran';
-    document.getElementById('email').value = 'saileshwaran2009@gmail.com';
-    document.getElementById('phone').value = '9445270054';
-    document.getElementById('service').value = 'Technical Training';
-    document.getElementById('message').value = 'This is a test message to check if Formspree is working properly.';
-    document.getElementById('newsletter').checked = true;
-    console.log('Test data filled with your actual data');
-  }
-});
-</script>
-<!-- OUR TEAM -->
-<section class="section">
-<h3>Our Leadership</h3>
-<div class="article">
-<p><strong>Mr. Thulasiraman Pandurangan</strong> - & Technical Director<br>
-<em>Industrial Mentor with two decades of IT experience with software delivery</em></p>
-<p><strong>Dr. Pranitha Karthikeyan</strong> - Founder <br>
-<em>Research Consultant at IITM Research Park (Pravartak Technologies), Professor of Practice (Sairam Institutions)</em></p>
-</div>
-</section>
-
-<!-- CONTACT SECTION -->
-<section id="contact" class="section">
-<h3>Contact Us</h3>
-<div class="contact-card">
-  
-  <!-- Contact Form -->
-  <div class="contact-form-container">
-    <h4>Send Us a Message</h4>
-    <p>Fill out the form below and we'll get back to you as soon as possible.</p>
-    
-    <!-- FORMSPREE FORM WITH PROPER CONFIGURATION -->
-    <form id="contactForm" class="contact-form" action="https://formspree.io/f/maqnnyja" method="POST">
-      <!-- Formspree Hidden Fields -->
-      <input type="hidden" name="_subject" value="New Contact Form Submission - Sri Matimaging Technologies">
-      <input type="hidden" name="_replyto" value="_replyto">
-      <input type="text" name="_gotcha" style="display:none">
-      <input type="hidden" name="_format" value="plain">
-      
-      <!-- Website Info (hidden field) -->
-      <input type="hidden" name="website" value="https://srimatimating.github.io/Sri-Matimaging/">
-      
-      <div class="form-group">
-        <label for="name">Full Name *</label>
-        <input type="text" id="name" name="name" required placeholder="Enter your full name">
-      </div>
-      
-      <div class="form-group">
-        <label for="email">Email Address *</label>
-        <input type="email" id="email" name="email" required placeholder="Enter your email address">
-      </div>
-      
-      <div class="form-group">
-        <label for="phone">Phone Number *</label>
-        <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number" 
-               pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number">
-        <small class="form-hint">10-digit phone number required</small>
-      </div>
-      
-      <div class="form-group">
-        <label for="service">Service Interested In</label>
-        <select id="service" name="service">
-          <option value="">Select a service</option>
-          <option value="MATLAB & Image Processing">MATLAB & Image Processing</option>
-          <option value="Vivado & FPGA">Vivado & FPGA</option>
-          <option value="Agile & Project Delivery">Agile & Project Delivery</option>
-          <option value="Technical Training">Technical Training</option>
-          <option value="Internship Program">Internship Program</option>
-          <option value="Other Inquiry">Other Inquiry</option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label for="message">Message *</label>
-        <textarea id="message" name="message" required placeholder="Type your message here..." rows="5"></textarea>
-        <small class="form-hint">Please provide details about your inquiry</small>
-      </div>
-      
-      <div class="form-group checkbox-group">
-        <input type="checkbox" id="newsletter" name="newsletter" value="Yes">
-        <label for="newsletter">Subscribe to our newsletter for updates on new services and training programs</label>
-      </div>
-      
-      <button type="submit" class="submit-btn">Send Message</button>
-      <p class="form-note">* Required fields must be filled. Website: <a href="https://srimatimating.github.io/Sri-Matimaging/" target="_blank">https://srimatimating.github.io/Sri-Matimaging/</a></p>
-    </form>
-  </div>
-  
-  <!-- Contact Information -->
-  <div class="contact-info-container">
-    <h4>Contact Information</h4>
-    
-    <div class="contact-info-item">
-      <div class="contact-icon">📧</div>
-      <div class="contact-details">
-        <h5>Email</h5>
-        <p>srimatimaging@gmail.com</p>
-        <small>All form submissions are forwarded to this email via Formspree</small>
-      </div>
-    </div>
-    
-    <div class="contact-info-item">
-      <div class="contact-icon">🌐</div>
-      <div class="contact-details">
-        <h5>Website</h5>
-        <p><a href="https://srimatimating.github.io/Sri-Matimaging/" target="_blank">https://srimatimating.github.io/Sri-Matimaging/</a></p>
-        <small>Visit our official website for more information</small>
-      </div>
-    </div>
-    
-    <div class="contact-info-item">
-      <div class="contact-icon">🎯</div>
-      <div class="contact-details">
-        <h5>Our Services</h5>
-        <ul>
-          <li>MATLAB & Image Processing Training</li>
-          <li>FPGA Design & Development</li>
-          <li>Agile Project Management</li>
-          <li>Technical Skill Development</li>
-          <li>Custom Internship Programs</li>
-        </ul>
-      </div>
-    </div>
-    
-    <div class="contact-note-box">
-      <p><strong>How Formspree works:</strong> Your message is securely sent to Formspree, which forwards it to our email. We typically respond within 24-48 hours.</p>
-    </div>
-  </div>
-  
-</div>
-</section>
-
-<footer>
-© 2025 Sri Matimaging Technologies. All rights reserved. | Website: <a href="https://srimatimating.github.io/Sri-Matimaging/" style="color: #fff;">https://srimatimating.github.io/Sri-Matimaging/</a>
-</footer>
-
-<script>
-// Service functionality
-function openService(i){
-  document.querySelectorAll('.service-detail')
-    .forEach(d=>d.classList.remove('active'));
-  document.getElementById('service'+i).classList.add('active');
-}
-
-// Contact Form Handling
-document.getElementById('contactForm').addEventListener('submit', async function(e) {
-  e.preventDefault(); // Prevent default form submission
-  
-  const name = document.getElementById('name').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const phone = document.getElementById('phone').value.trim();
-  const message = document.getElementById('message').value.trim();
-  
-  // Basic validation
-  if (!name || !email || !phone || !message) {
-    alert('Please fill in all required fields marked with *');
-    return;
-  }
-  
-  // Email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    alert('Please enter a valid email address');
-    return;
-  }
-  
-  // Phone validation
-  const phoneRegex = /^[0-9]{10}$/;
-  if (!phoneRegex.test(phone)) {
-    alert('Please enter a valid 10-digit phone number');
-    return;
-  }
-  
-  // Show loading state
-  const submitBtn = document.querySelector('.submit-btn');
-  const originalText = submitBtn.textContent;
-  const originalBgColor = submitBtn.style.backgroundColor;
-  submitBtn.textContent = 'Sending...';
-  submitBtn.disabled = true;
-  submitBtn.style.backgroundColor = '#ff9800';
-  
-  try {
-    // Get the form data
-    const formData = new FormData(this);
-    
-    // Send to Formspree
-    const response = await fetch(this.action, {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'Accept': 'application/json'
-      }
-    });
-    
-    if (response.ok) {
-      // Success
-      submitBtn.textContent = '✓ Message Sent!';
-      submitBtn.style.backgroundColor = '#28a745';
-      
-      // Show success message
-      const successMsg = document.createElement('div');
-      successMsg.className = 'success-message';
-      successMsg.innerHTML = '✅ Thank you! Your message has been sent successfully. We\'ll get back to you soon.';
-      successMsg.style.cssText = 'background: #d4edda; color: #155724; padding: 15px; border-radius: 6px; margin-top: 20px; border: 1px solid #c3e6cb;';
-      
-      // Insert success message
-      const formContainer = document.querySelector('.contact-form-container');
-      formContainer.appendChild(successMsg);
-      
-      // Reset form after 5 seconds
-      setTimeout(() => {
-        document.getElementById('contactForm').reset();
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-        submitBtn.style.backgroundColor = originalBgColor;
-        successMsg.remove();
-      }, 5000);
-      
-      // Also show alert
-      setTimeout(() => {
-        alert('Thank you! Your message has been sent successfully. We will respond within 24-48 hours.');
-      }, 100);
-      
-    } else {
-      // Error from Formspree
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Failed to send message. Server responded with status: ' + response.status);
-    }
-  } catch (error) {
-    // Error handling
-    console.error('Form submission error:', error);
-    submitBtn.textContent = 'Try Again';
-    submitBtn.disabled = false;
-    submitBtn.style.backgroundColor = '#dc3545';
-    
-    // Show error message
-    alert('Sorry, there was an error sending your message. Please try again. If the problem persists, you can email us directly at srimatimaging@gmail.com');
-    
-    // Reset button after 5 seconds
-    setTimeout(() => {
-      submitBtn.textContent = originalText;
-      submitBtn.disabled = false;
-      submitBtn.style.backgroundColor = originalBgColor;
-    }, 5000);
-  }
-});
-
-// Phone number formatting
-document.getElementById('phone').addEventListener('input', function(e) {
-  let value = e.target.value.replace(/\D/g, '');
-  if (value.length > 10) value = value.substring(0, 10);
-  e.target.value = value;
-});
-
-// Formspree TEST: Auto-fill form with test data (Ctrl+T)
-document.addEventListener('keydown', function(e) {
-  if (e.ctrlKey && e.key === 't') { // Ctrl+T for test data
-    e.preventDefault();
-    document.getElementById('name').value = 'Test User';
-    document.getElementById('email').value = 'test@example.com';
-    document.getElementById('phone').value = '9876543210';
-    document.getElementById('service').value = 'MATLAB & Image Processing';
-    document.getElementById('message').value = 'This is a test message from the contact form on Sri Matimaging Technologies website. Website URL: https://srimatimating.github.io/Sri-Matimaging/';
-    document.getElementById('newsletter').checked = true;
-    console.log('✅ Test data filled for Formspree testing');
-    alert('Test data filled! You can now submit to test Formspree integration.');
-  }
-});
-</script>
-
-</body>
-</html>
 
 
 
